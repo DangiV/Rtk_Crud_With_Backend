@@ -36,10 +36,10 @@ const AllProduct = () => {
                 <tbody>
                     {Array.isArray(products) && products.length > 0 ? (
                         products.map((item) => (
-                            <tr key={item._id}>
-                                <th scope="row">{item._id}</th>
-                                <td>{item.pName}</td>
-                                <td>{item.pPrice}</td>
+                            <tr key={item &&  item._id}>
+                                <th scope="row">{item &&  item._id}</th>
+                                <td>{item && item.pName}</td>
+                                <td>{item &&  item.pPrice}</td>
                                 <td><button className='btn btn-warning' onClick={() => EditItem(item._id)}>Edit</button></td>
                                 <td><button className='btn btn-danger' onClick={() => DeleteItem(item._id)}>Delete</button></td>
                             </tr>

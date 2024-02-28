@@ -1,8 +1,9 @@
 import mongoose from "mongoose";
 
-// const url  = "mongodb+srv://vikasaurasoft:foodapplication@cluster0.kixdbb4.mongodb.net/foodapp"
+// mongodb atlas  = "mongodb+srv://vikasaurasoft:foodapplication@cluster0.kixdbb4.mongodb.net/Crud"
+//mongodb local = "mongodb://localhost:27017"
 
-mongoose.connect('mongodb+srv://vikasaurasoft:foodapplication@cluster0.kixdbb4.mongodb.net/Crud', {
+mongoose.connect('mongodb+srv://vikasaurasoft:foodapplication@cluster0.kixdbb4.mongodb.net/Crud', { 
     family: 4
 })
 

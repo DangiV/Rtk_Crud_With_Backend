@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { makeApi } from '../../api/MakeApi'
 
 const initialState = {
     users: [],
@@ -7,12 +8,10 @@ const initialState = {
     error: null,
 }
 
-
 // create  product api call here 
 export const CreateProduct = createAsyncThunk('CreateProduct', async (data, { rejectWithValue }) => {
     try {
-        const response = await axios.post('http://localhost:3020/AddProduct', data)
-        console.log("data", response);
+        const logg = await makeApi('post', "/AddProduct", data)
         return response
     } catch (error) {
         return rejectWithValue(error)
@@ -32,7 +31,6 @@ export const GetAllDetails = createAsyncThunk('GetAllDetails', async () => {
 
 // Delete product api call here 
 export const DeleteProduct = createAsyncThunk('DeleteProduct', async (id) => {
-    console.log("id for delete", id);
     try {
         const response = await axios.delete(`http://localhost:3020/Deleteproduct/${id}`)
         console.log("data", response);
@@ -45,7 +43,6 @@ export const DeleteProduct = createAsyncThunk('DeleteProduct', async (id) => {
 
 // update product api call here 
 export const EditProduct = createAsyncThunk('EditProduct', async ({ productData, id }, { rejectWithValue }) => {
-    console.log("data at slice ", productData, id);
     try {
         const response = await axios.put(`http://localhost:3020/EditProduct/${id}`, productData)
         console.log("data", response);

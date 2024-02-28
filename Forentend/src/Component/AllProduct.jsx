@@ -9,8 +9,6 @@ const AllProduct = () => {
 
     const products = useSelector((state) => state.users.users);
 
-    console.log('pro', products);
-
     const EditItem = (id) => {
         navigate(`/EditProduct/${id}`)
     }

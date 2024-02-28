@@ -2,12 +2,13 @@ import ProductSchema from "../Model/productMode.js";
 
 // create product
 export const AddPrdoct = async (req, res) => {
-    const { pName, pPrice } = req.body
+    const { pName, pPrice , category } = req.body
 
     try {
         const dataCreate = await ProductSchema.create({
             pName: pName,
-            pPrice: pPrice
+            pPrice: pPrice,
+            category : category
         })
         res.status(200).json(dataCreate)
 

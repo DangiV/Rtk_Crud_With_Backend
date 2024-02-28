@@ -23,7 +23,6 @@ export const CreateProduct = createAsyncThunk('CreateProduct', async (data, { re
 export const GetAllDetails = createAsyncThunk('GetAllDetails', async () => {
     try {
         const response = await axios.get('http://localhost:3020/getAllProduct')
-        console.log("data", response);
         return response;
     } catch (error) {
         throw Error("Error fetching product data");
@@ -125,6 +124,5 @@ const userSlice = createSlice({
     },
 })
 
-console.log(userSlice.actions);
 
 export default userSlice.reducer;

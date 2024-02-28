@@ -1,22 +1,21 @@
+import React from 'react';
 import { Box } from '@mui/material';
-import TextField from '@mui/material/TextField';
-
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { makeApi } from '../api/MakeApi';
+import TextField from '@mui/material/TextField';
 
 const NavBar = () => {
     const products = useSelector((state) => state.users.users);
 
-    const [searchData, setSearchData] = useState('')
-
-    const HandleChange = (e) => {
-        setSearchData(e.target.value);
-        console.log(e.target.value);
-    }
-
-    const SeachData = async () => {
-        const makeApi = await ("get", '/search', searchData)
+    const HandleChange = async (e) => {
+        let key = e.target.value
+        try {
+            const response = await makeApi("get", `/search/${key}`,)
+            console.log("response", response);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     return (
@@ -34,7 +33,7 @@ const NavBar = () => {
 
                     <li className="nav-item active">
                         <Link className="nav-link" to="/">
-                            {/* All Product ({products.length}) */}
+                            All Product ({products.length})
                         </Link>
                     </li>
 

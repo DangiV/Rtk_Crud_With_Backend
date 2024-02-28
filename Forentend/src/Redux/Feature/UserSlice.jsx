@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import axios from 'axios'
 import { makeApi } from '../../api/MakeApi'
 
 const initialState = {
@@ -8,10 +7,11 @@ const initialState = {
     error: null,
 }
 
+
 // create  product api call here 
 export const CreateProduct = createAsyncThunk('CreateProduct', async (data, { rejectWithValue }) => {
     try {
-        const logg = await makeApi('post', "/AddProduct", data)
+        const response = await makeApi('post', "/AddProduct", data)
         return response
     } catch (error) {
         return rejectWithValue(error)
@@ -21,7 +21,7 @@ export const CreateProduct = createAsyncThunk('CreateProduct', async (data, { re
 // get all product from backend api call here 
 export const GetAllDetails = createAsyncThunk('GetAllDetails', async () => {
     try {
-        const response = await axios.get('http://localhost:3020/getAllProduct')
+        const response = await makeApi('get', "/getAllProduct")
         return response;
     } catch (error) {
         throw Error("Error fetching product data");
@@ -32,8 +32,7 @@ export const GetAllDetails = createAsyncThunk('GetAllDetails', async () => {
 // Delete product api call here 
 export const DeleteProduct = createAsyncThunk('DeleteProduct', async (id) => {
     try {
-        const response = await axios.delete(`http://localhost:3020/Deleteproduct/${id}`)
-        console.log("data", response);
+        const response = await makeApi('delete', `/Deleteproduct/${id}`)
         return response;
     } catch (error) {
         throw Error("Error fetching product data");
@@ -44,8 +43,7 @@ export const DeleteProduct = createAsyncThunk('DeleteProduct', async (id) => {
 // update product api call here 
 export const EditProduct = createAsyncThunk('EditProduct', async ({ productData, id }, { rejectWithValue }) => {
     try {
-        const response = await axios.put(`http://localhost:3020/EditProduct/${id}`, productData)
-        console.log("data", response);
+        const response = await makeApi('put', `/EditProduct/${id}`, productData)
         return response
     } catch (error) {
         return rejectWithValue(error)
@@ -78,11 +76,11 @@ const userSlice = createSlice({
         // here we are getting all product list 
         builder
             .addCase(GetAllDetails.pending, (state) => {
-                state.status = true;
+                state.status = "loading";;
             })
             .addCase(GetAllDetails.fulfilled, (state, action) => {
                 state.status = "success";
-                state.users = action.payload.data;
+                state.users = action.payload;
             })
             .addCase(GetAllDetails.rejected, (state, action) => {
                 state.status = "failed";
@@ -92,7 +90,7 @@ const userSlice = createSlice({
         // here we have handle delete function response 
         builder
             .addCase(DeleteProduct.pending, (state) => {
-                state.status = true;
+                state.status = "loading";;
             })
             .addCase(DeleteProduct.fulfilled, (state, action) => {
                 state.status = "success";

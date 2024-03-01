@@ -7,7 +7,6 @@ const initialState = {
     error: null,
 }
 
-
 // create  product api call here 
 export const CreateProduct = createAsyncThunk('CreateProduct', async (data, { rejectWithValue }) => {
     try {
@@ -28,6 +27,22 @@ export const GetAllDetails = createAsyncThunk('GetAllDetails', async () => {
     }
 })
 
+// search data api call here 
+export const SearchProduct = createAsyncThunk('SearchProduct', async (key, { rejectWithValue }) => {
+    try {
+        let response;
+
+        if (key.trim() === '') {
+            response = await makeApi('get', "/getAllProduct");
+        }
+        else {
+            response = await makeApi('get', `/search/${key}`)
+        }
+        return response;
+    } catch (error) {
+        throw Error("Error fetching filter data")
+    }
+})
 
 // Delete product api call here 
 export const DeleteProduct = createAsyncThunk('DeleteProduct', async (id) => {
@@ -38,7 +53,6 @@ export const DeleteProduct = createAsyncThunk('DeleteProduct', async (id) => {
         throw Error("Error fetching product data");
     }
 })
-
 
 // update product api call here 
 export const EditProduct = createAsyncThunk('EditProduct', async ({ productData, id }, { rejectWithValue }) => {
@@ -76,7 +90,7 @@ const userSlice = createSlice({
         // here we are getting all product list 
         builder
             .addCase(GetAllDetails.pending, (state) => {
-                state.status = "loading";;
+                state.status = "loading";
             })
             .addCase(GetAllDetails.fulfilled, (state, action) => {
                 state.status = "success";
@@ -86,6 +100,21 @@ const userSlice = createSlice({
                 state.status = "failed";
                 state.error = action.payload.message;
             });
+
+        // here we are filtering data according to user search
+        builder
+            .addCase(SearchProduct.pending, (state) => {
+                state.status = "loading"
+            })
+            .addCase(SearchProduct.fulfilled, (state, action) => {
+                state.status = "success";
+                state.users = action.payload;
+            })
+            .addCase(SearchProduct.rejected, (state, action) => {
+                state.status = "failed";
+                state.error = action.payload.message;
+            })
+
 
         // here we have handle delete function response 
         builder
@@ -117,7 +146,7 @@ const userSlice = createSlice({
                 state.error = action.payload.message;
             });
     },
-})
+}) 
 
 
 export default userSlice.reducer;

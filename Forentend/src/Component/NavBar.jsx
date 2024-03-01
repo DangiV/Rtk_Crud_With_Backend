@@ -1,40 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React  from 'react';
 import { Box } from '@mui/material';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { makeApi } from '../api/MakeApi';
 import TextField from '@mui/material/TextField';
+import { SearchProduct } from '../Redux/Feature/UserSlice';
 
 const NavBar = () => {
+    const dispatch = useDispatch();
     const products = useSelector((state) => state.users.users);
 
-    const [key, setkey] = useState("");
-
     const HandleChange = (e) => {
-        setkey(e.target.value)
+        let query = e.target.value;
+        console.log('search item', query);
+        dispatch(SearchProduct(query))
     }
-
-    useEffect(() => {
-        // call api if someone type something in search
-        if (key) {
-            const timeoutId = setTimeout(async () => {
-                // Call your API function here with the searchTerm
-                try {
-                    const response = await makeApi("get", `/search/${key}`,)
-                    console.log("response", response);
-                } catch (error) {
-                    console.log(error);
-                }
-                console.log('API call with searchTerm:', key);
-            }, 1000);
-
-            // Use a setTimeout to delay the API call after the user stops typing
-
-            // Clear the timeout on each key press to reset the delay
-            return () => clearTimeout(timeoutId);
-        }
-    }, [key]);
-
 
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">

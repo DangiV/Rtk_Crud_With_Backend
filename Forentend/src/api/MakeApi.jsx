@@ -1,7 +1,6 @@
 import axios from "axios";
 
 export const makeApi = async (req, url, body) => {
-    console.log("make api", req, url, body)
 
     const previousUrl = "http://localhost:3020"
     var config = {

@@ -1,4 +1,4 @@
-import React  from 'react';
+import React from 'react';
 import { Box } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -22,6 +22,13 @@ const NavBar = () => {
             </Link>
             <div className="collapse navbar-collapse" id="navbarNav">
                 <ul className="navbar-nav">
+
+                    <li className="nav-item active">
+                        <Link className="nav-link" to="/Login">
+                            Login
+                        </Link>
+                    </li>
+                    
                     <li className="nav-item active">
                         <Link className="nav-link" to="/CreateProduct">
                             Create Product
@@ -33,6 +40,8 @@ const NavBar = () => {
                             All Product ({products.length})
                         </Link>
                     </li>
+
+
 
                 </ul>
 

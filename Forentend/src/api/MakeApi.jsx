@@ -2,11 +2,16 @@ import axios from "axios";
 
 export const makeApi = async (req, url, body) => {
 
+    const getToken = localStorage.getItem('Usertoken')
+
     const previousUrl = "http://localhost:3020"
     var config = {
         method: req,
         url: previousUrl + url,
-        data: body
+        data: body,
+        headers: {
+            Authorization: `Bearer ${getToken}`
+        }
     };
 
     try {

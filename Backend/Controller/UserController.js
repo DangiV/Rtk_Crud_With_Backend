@@ -1,4 +1,5 @@
 import UserSchema from "../Model/User.js";
+import { createToken } from "../auth.js";
 
 // register user 
 
@@ -34,7 +35,8 @@ export const userLogin = async (req,res) =>{
     try {
         const findData = await UserSchema.findOne({email , password})
         if(findData){
-            res.status(200).json('user login successfully')
+            const token = createToken(findData.id);
+            res.status(200).json({ token, message: 'user login successfully' });
         }
         else{
             res.status(400).json('invalid user email and passord')

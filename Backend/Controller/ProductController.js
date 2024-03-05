@@ -20,6 +20,7 @@ export const AddPrdoct = async (req, res) => {
 // get all product
 
 export const GetAllData = async (req, res) => {
+    console.log(req);
     try {
 
         const allData = await ProductSchema.find()
@@ -32,6 +33,7 @@ export const GetAllData = async (req, res) => {
 // edt details  product
 
 export const EditProduct = async (req, res) => {
+  
     const { id } = req.params;
 
     try {
